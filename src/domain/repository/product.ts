@@ -1,20 +1,21 @@
+import Category from "../entity/category";
 import Product from "../entity/product";
 
-const PRODUCTS: Array<Product> = [];
-
 export default class ProductRepository {
+    static PRODUCTS: Array<Product> = [];
+
     static create(product: Product): void {
-        PRODUCTS.push(product);
+        this.PRODUCTS.push(product);
     }
 
-    static update(slug: string, data: Product): void {
-        const product = PRODUCTS.find((p) => p.slug === slug);
+    static update(slug: string, data: Category): void {
+        const product = this.getBySlug(slug);
         if (product) {
-            product.setCategory(data.getCategory());
+            product.setCategory(data);
         }
     }
 
     static getBySlug(slug: string): Product | undefined {
-        return PRODUCTS.find((p) => p.slug === slug);
+        return this.PRODUCTS.find((p) => p.slug === slug);
     }
 }
