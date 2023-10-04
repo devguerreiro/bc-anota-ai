@@ -1,9 +1,9 @@
 import Store from "./store";
 
 export default class Category {
-    readonly title: string;
-    readonly owner: Store;
-    readonly description: string;
+    private title: string;
+    private owner: Store;
+    private description: string;
 
     constructor(title: string, owner: Store, description: string) {
         this.title = title;

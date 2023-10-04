@@ -20,7 +20,7 @@ test("should be able to change the product category", () => {
     const product = createProduct();
     const newCategory = new Category(
         "Category 2",
-        product.owner,
+        product.getOwner(),
         "Description"
     );
 

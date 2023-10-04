@@ -2,11 +2,11 @@ import Store from "./store";
 import Category from "./category";
 
 export default class Product {
-    readonly title: string;
-    readonly owner: Store;
+    private title: string;
+    private owner: Store;
     private category: Category;
-    readonly price: number;
-    readonly description: string;
+    private price: number;
+    private description: string;
 
     constructor(
         title: string,
@@ -32,5 +32,9 @@ export default class Product {
 
     getCategory(): Category {
         return this.category;
+    }
+
+    getOwner(): Store {
+        return this.owner;
     }
 }

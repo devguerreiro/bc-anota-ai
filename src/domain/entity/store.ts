@@ -1,5 +1,5 @@
 export default class Store {
-    readonly name: string;
+    private name: string;
 
     constructor(name: string) {
         this.name = name;
