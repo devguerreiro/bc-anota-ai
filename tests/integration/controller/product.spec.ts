@@ -31,15 +31,16 @@ const getProduct = (product: Product) => {
 };
 
 const getBaseUrl = (product: Product) => {
-    return `/api/v1/${product.owner.slug}/catalog/product`;
+    return `/api/v1/${product.getOwner().slug}/catalog/product`;
 };
 
 test("should be able to change the product category through PUT request", async () => {
     // given
     const product = createProduct();
+
     const newCategory = new Category(
         "Category 2",
-        product.owner,
+        product.getOwner(),
         "Description"
     );
 

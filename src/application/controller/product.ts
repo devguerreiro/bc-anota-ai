@@ -7,25 +7,33 @@ import Category from "../../domain/entity/category";
 
 const route = express.Router();
 
+interface IBody {
+    title: string;
+    owner: {
+        name: string;
+    };
+    category: {
+        title: string;
+        owner: {
+            name: string;
+        };
+        description: string;
+    };
+    price: number;
+    description: string;
+}
+
 route.put("/product/:slug", (req: Request, res: Response) => {
     const { slug } = req.params;
-    const data = req.body;
+    const { category } = <IBody>req.body;
 
-    const store = new Store(data.owner.name);
-    const category = new Category(
-        data.category.title,
-        store,
-        data.category.description
-    );
-    const product = new Product(
-        data.title as string,
-        store,
-        category,
-        Number(data.price),
-        data.description as string
+    const newCategory = new Category(
+        category.title,
+        new Store(category.owner.name),
+        category.description
     );
 
-    ProductRepository.update(slug, product);
+    ProductRepository.update(slug, newCategory);
 
     res.sendStatus(200);
 });
