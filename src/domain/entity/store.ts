@@ -4,4 +4,8 @@ export default class Store {
     constructor(name: string) {
         this.name = name;
     }
+
+    get slug(): string {
+        return this.name.split(" ").join("-").toLowerCase();
+    }
 }

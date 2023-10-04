@@ -22,6 +22,10 @@ export default class Product {
         this.description = description;
     }
 
+    get slug(): string {
+        return this.title.split(" ").join("-").toLowerCase();
+    }
+
     setCategory(category: Category): void {
         this.category = category;
     }

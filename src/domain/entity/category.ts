@@ -10,4 +10,8 @@ export default class Category {
         this.owner = owner;
         this.description = description;
     }
+
+    get slug(): string {
+        return this.title.split(" ").join("-").toLowerCase();
+    }
 }
