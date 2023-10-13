@@ -1,8 +1,8 @@
+import ProductRepository from "../../../src/infra/repository/product";
+
 import Store from "../../../src/domain/entity/store";
 import Product from "../../../src/domain/entity/product";
 import Category from "../../../src/domain/entity/category";
-
-import ProductRepository from "../../../src/domain/repository/product";
 
 const createProduct = () => {
     const store = new Store("Store 1");
@@ -17,25 +17,24 @@ const createProduct = () => {
     return product;
 };
 
-beforeEach(() => {
-    ProductRepository.PRODUCTS = [];
-});
-
 test("should be able to create a new product", () => {
     // given
     const product = createProduct();
+    const repo = new ProductRepository();
 
     // when
-    ProductRepository.create(product);
+    repo.create(product);
 
     // assert
-    expect(ProductRepository.getBySlug(product.slug)).toEqual(product);
+    expect(repo.getBySlug(product.slug)).toEqual(product);
 });
 
 test("should be able to update the category of an existent product", () => {
     // given
     const product = createProduct();
-    ProductRepository.create(product);
+    const repo = new ProductRepository();
+
+    repo.create(product);
 
     const newCategory = new Category(
         "Category 2",
@@ -44,20 +43,22 @@ test("should be able to update the category of an existent product", () => {
     );
 
     // when
-    ProductRepository.update(product.slug, newCategory);
+    repo.update(product, newCategory);
 
     // assert
-    const updatedProduct = ProductRepository.getBySlug(product.slug);
+    const updatedProduct = repo.getBySlug(product.slug);
     expect(updatedProduct?.getCategory()).toBe(newCategory);
 });
 
 test("should be able to retrieve a category by slug", () => {
     // given
     const product = createProduct();
-    ProductRepository.create(product);
+    const repo = new ProductRepository();
+
+    repo.create(product);
 
     // when
-    const retrievedProduct = ProductRepository.getBySlug(product.slug);
+    const retrievedProduct = repo.getBySlug(product.slug);
 
     // assert
     expect(retrievedProduct).toBe(product);
@@ -66,10 +67,12 @@ test("should be able to retrieve a category by slug", () => {
 test("should return undefined if the category doesn't exist", () => {
     // given
     const product = createProduct();
-    ProductRepository.create(product);
+    const repo = new ProductRepository();
+
+    repo.create(product);
 
     // when
-    const retrievedProduct = ProductRepository.getBySlug("inexistent-product");
+    const retrievedProduct = repo.getBySlug("inexistent-product");
 
     // assert
     expect(retrievedProduct).toBe(undefined);
